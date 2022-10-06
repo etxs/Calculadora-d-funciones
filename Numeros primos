@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+int main ()
+
+{
+	int h=0,a=0,n=0,nay=0,res=0;
+	int primo;
+	do{		
+		printf("\n\n--------------------------------\n");
+		printf("\n\tMenu c: \n");
+		printf("\n\tQue desea realizar? \n\n");
+		printf("--------------------------------\n");
+		printf("\n1: Imprimir numeros primos\n");
+		printf("2: Salir del programa\n");
+	    cin >> primo;
+
+		switch (primo)
+		{
+			case 1:
+				printf("\n\t!Usted a elegido imprimir numeros primos! \n");
+				printf("\nIntroduzca el numero limite que se podra imprimir : ");
+				cin>>h;
+				for(a=1;a<=h;a++)
+				  {
+				    for(n=1;n<=a;n++)
+				    {
+				      res=a%n;
+				      if(res==0)
+				      {
+				        nay=nay+1;
+				      }
+				    }
+				    if(nay==2)
+				    {
+				      cout<<"\t "<<a<<endl;
+				    }
+				    nay=0;
+				  }
+				break;
+			case 2:
+	            printf("usted a elegido salir del programa\n");
+				printf("Vuelva pronto! c: \n");
+				break;
+	        default:
+	      printf ("ERROR, No tenemos esa opcion! ");
+	      break;
+		}
+	} while(primo!=2&&1);
+	return 0;
+}
