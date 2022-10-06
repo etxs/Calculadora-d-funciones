@@ -1,0 +1,217 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+class Calculadora{
+	private: 
+		float sexa,radian,cose,tan,seno;
+	public: 
+ 		void data(int *size, float mat1[][51]);
+		void data_scale(int size1, float mat2[][51]);
+		void solution(int Dim, float Sist[][51]);
+		void Coseno();
+		void Tangente();
+		void Seno();
+};
+
+class Menu
+{
+public:
+    int entrada;
+    void iniciarMenu();
+};
+
+
+//objeto
+Menu objetoMenu;
+
+
+void Menu::iniciarMenu() 
+{
+    system("cls");//Limpia la pantalla de la consola
+    cout <<"\n\t------------------------------------------\n"<<endl;
+    cout <<"\n\tBIENVENIDO A ESTA CALCULADORA c:"<<endl;
+    cout <<"\n\t------------------------------------------\n";
+     cout <<"\n\t------------------------------------------\n";
+    cout << "Que funcion matematica quiere realiza ? " << endl << "[1] Matriz " << endl << "[2] Seno" << endl << "[3] Coseno" << endl<< "[4] Tangente" << endl << "[4] Salir" << endl;
+    cin >> entrada;
+
+    if (entrada == 1) 
+    {
+    	system("cls");
+        cout <<"\n\t------------------------------------------------------------\n";
+        cout << "\n\t Bienvenido, usted escogio la funcion Matriz : " << endl;
+        cout <<"\n\t------------------------------------------------------------\n";
+	    int i,size;
+	    float mat[50][51];
+	    data(&size,mat);
+	    system("PAUSE()");
+		system("CLS()");
+	    printf("\t\n    MATRIZ: \n\n");
+	    data_scale(size,mat);
+	    solution(size,mat);
+	    printf("\t\nSolucion:\n");
+	    for(i=1;i<=size;i++)
+	        printf("\n X%d=%f \n",i,mat[i][size+1]);
+	        scanf("");
+	        return(0);
+        Calculadora calcu;
+        calcu.data();
+    }
+
+    if (entrada == 2)
+    {
+        system("cls");
+        cout <<"\n\t------------------------------------------------------------\n";
+        cout << "\n\t Bienvenido, usted escogio la funcion Seno : " << endl;
+        cout <<"\n\t------------------------------------------------------------\n";
+        Calculadora calcu;
+        calcu.seno();
+    }
+    
+    if (entrada == 3)
+    {
+        system("cls");
+        cout <<"\n\t------------------------------------------------------------\n";
+        cout << "\n\t Bienvenido, usted escogio la funcion Coseno : " << endl;
+        cout <<"\n\t------------------------------------------------------------\n";
+        Calculadora calcu;
+        calcu.coseno();
+    }
+    
+    if(entrada == 4)
+    {
+    	cout <<"\n\t------------------------------------------------------------\n";
+        cout << "\n\t Bienvenido, usted escogio la funcion Tangente : " << endl;
+        cout <<"\n\t------------------------------------------------------------\n";
+        Calculadora calcu;
+        calcu.tangente();
+	}
+    
+	else if(entrada != 1 && 2 && 3 && 4)
+    {
+        objetoMenu.iniciarMenu();
+    }  
+    
+}
+
+int main()
+{
+    objetoMenu.iniciarMenu();
+}
+
+void Calculadora::Coseno()
+{
+	cout<<"Ingrese un angulo sexagesimal: ";
+	cin>>sexa;
+	
+	radian =(3.1416/180)*sexa;
+
+	cose=cos(radian);
+	cout<<"Coseno: "<<cose<<endl;
+}
+
+void Calculadora::Seno()
+{
+	cout<<"Ingrese un angulo sexagesimal: ";
+	cin>>sexa;
+	
+	radian =(3.1416/180)*sexa;
+	
+	seno=sin(radian);
+	cout<<"Seno: "<<seno<<endl;
+}
+
+void Calculadora::Tangente()
+{
+	cout<<"Ingrese un angulo sexagesimal: ";
+	cin>>sexa;
+	
+	radian =(3.1416/180)*sexa;
+	
+	tang=tan(radian);
+	cout<<"Tangente: "<<tang<<endl;
+}
+
+void data(int *size,float mat1[][51])
+{
+    int H,A;
+    printf("\t------------------------------------------------\n");
+    printf("\n\t    SISTEMA DE ECUACIONES POR GAUS JORDAN\n");
+    printf("\n\t-----------------------------------------------\n");
+    printf("\n\n\n CONSTANTES: ");
+    scanf("%d",&*size);
+    printf("\n Variables de la matriz:\n\n");
+    printf("\n\n\t-------------------------------------------------\n");
+    printf("\n\t                 MATRIZ :\n");
+    for(H=1;H<=*size;H++)
+        for(A=1;A<=*size;A++)
+        {
+        printf("\n\tVALORES DE LA MATRIZ(%d,%d):",H,A);
+    scanf("%f",&mat1[H][A]);
+    }
+    printf("\n\t-------------------------------------------------\n");
+	printf("\n\n\n RESULTADO:\n");
+    for(H=1;H<=*size;H++){
+        printf("\n VECTOR(%d): ",H);
+        scanf("%f",&mat1[H][*size+1]);
+    }
+    }
+
+void data_scale(int escala, float mat2[][51])
+{
+    int x,y;
+    for(x=1;x<=escala;x++)
+        {
+        for(y=1;y<=(escala+1);y++)
+        {
+            printf("%7.2f",mat2[x][y]);
+            if(y==escala)
+             printf("   |");
+    }
+		printf("\n");
+    }
+    }
+
+void solution(int size, float mat[][51])
+{
+    int result,i,H,A,m;
+    float pivote,x;
+
+    for(i=1;i<=size;i++)
+        {
+        result=0;m=i;
+        while(result==0)
+        {
+           if((mat[m][i]>0.0000001)||((mat[m][i]<-0.0000001)))
+           {
+                result=1;
+    }
+            else
+                m++;
+            }
+        pivote=mat[m][i];
+        for(H=1;H<=(size+1);H++)
+            {
+            x=mat[m][H];
+            mat[m][H]=mat[i][H];
+            mat[i][H]=x/pivote;
+        }
+        for(A=i+1;A<=size;A++)
+            {
+            x=mat[A][i];
+            for(H=i;H<=(size+1);H++)
+            {
+                mat[A][H]=mat[A][H]-x*mat[i][H];
+        }
+    }
+    }
+
+    for(i=size;i>=1;i--)
+        for(H=(i-1);H>=1;H--)
+        {
+        mat[H][size+1]=mat[H][size+1]-mat[H][i]*mat[i][size+1];
+        mat[H][i]=0;
+    }
+}
